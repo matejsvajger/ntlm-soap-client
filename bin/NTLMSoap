@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+$sapi_type = php_sapi_name();
+if (substr($sapi_type, 0, 3) != 'cli') {
+  http_response_code(500);
+  die;
+}
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use matejsvajger\NTLMSoap\Commands\NTLMFunctionsCommand;
+use matejsvajger\NTLMSoap\Commands\NTLMServiceCommand;
+use matejsvajger\NTLMSoap\Commands\NTLMTypesCommand;
+
+$application = new Application();
+$application->add(new NTLMFunctionsCommand());
+$application->add(new NTLMServiceCommand());
+$application->add(new NTLMTypesCommand());
+$application->run();

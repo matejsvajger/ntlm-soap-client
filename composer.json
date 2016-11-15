@@ -1,0 +1,53 @@
+{
+    "name": "matejsvajger/ntlm-soap-client",
+    "type": "library",
+    "description": "PHP WDSL/Soap Client with NTLM Authentication for Microsoft Dynamics NAT Server.",
+    "keywords": [
+        "matejsvajger",
+        "ntlm-soap-client"
+    ],
+    "homepage": "https://github.com/matejsvajger/ntlm-soap-client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matej Svajger",
+            "email": "hello@matejsvajger.com",
+            "homepage": "http://www.matejsvajger.com",
+            "role": "Owner"
+        }
+    ],
+    "require": {
+        "php": "~5.6|~7.0",
+        "symfony/console": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "~4.0||~5.0",
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "matejsvajger\\NTLMSoap\\": "src/NTLMSoap/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "matejsvajger\\NTLMSoap\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "bin": [
+        "bin/NTLMSoap"
+    ]
+}
