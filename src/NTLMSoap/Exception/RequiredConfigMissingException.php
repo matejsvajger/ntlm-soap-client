@@ -6,7 +6,7 @@ class RequiredConfigMissingException extends \Exception
 {
     private $param;
 
-    static function withItem($param)
+    public static function withItem($param)
     {
         $self = new static(sprintf('Required config item "%s" missing', $param));
         $self->param = $param;
@@ -14,7 +14,7 @@ class RequiredConfigMissingException extends \Exception
         return $self;
     }
 
-    function getItem()
+    public function getItem()
     {
         return $this->param;
     }
