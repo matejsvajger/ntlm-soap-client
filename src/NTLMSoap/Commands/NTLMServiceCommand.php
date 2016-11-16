@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use matejsvajger\NTLMSoap\Client;
+use matejsvajger\NTLMSoap\Common\NTLMConfig;
 
 /**
  * Console command to perform actions on the WebService URL.
@@ -66,13 +67,13 @@ class NTLMServiceCommand extends Command
         $serviceArray = explode('/', $url);
         $serviceEndPoint = array_pop($serviceArray);
 
-        $soapOptions = [
+        $soapConfig = new NTLMConfig([
             'domain' => $domain,
             'username' => $username,
             'password' => $password
-        ];
+        ]);
 
-        $client = new Client($url, $soapOptions);
+        $client = new Client($url, $soapConfig);
 
         $response = $client->$action(['filter'=>[], 'setSize'=>$size, 'bookmarkKey'=>null]);
         if (!empty($response)) {
