@@ -3,15 +3,14 @@
 namespace matejsvajger\NTLMSoap\Model;
 
 use matejsvajger\NTLMSoap\Model\Traits\NTLMRequest;
+use matejsvajger\NTLMSoap\Common\NTLMConfig;
 
 class BaseClient extends \SoapClient
 {
     use NTLMRequest;
 
     protected $wdsl = null;
-    protected $domain = null;
-    protected $username = null;
-    protected $password = null;
+    protected $config = null;
 
     /**
      * Creates a new instance of the BaseClient
@@ -21,18 +20,28 @@ class BaseClient extends \SoapClient
      * @date    2016-11-14
      *
      * @param   string     $wdsl    URL of the NAT WDSL Service.
-     * @param   array      $ntlmOptions Options for NTLM Authentication.
-     * @param   array      $soapOptions Native PHP SoapClient options.
+     * @param   array      $config  Options for NTLM Authentication.
+     * @param   array      $options Native PHP SoapClient options.
      */
-    public function __construct($wdsl, $ntlmOptions = [], $soapOptions = [])
+    public function __construct($wdsl, NTLMConfig $config = null, $options = [])
     {
         $this->wdsl = $wdsl;
+        $this->config = $config;
 
-        foreach ($ntlmOptions as $key => $value) {
-            $this->{$key} = $value;
+        $wrapperExists = in_array("http", stream_get_wrappers());
+        if ($wrapperExists) {
+            stream_wrapper_unregister('http');
         }
 
-        parent::__construct($wdsl, $soapOptions);
+        //- Replace HTTP Stream with NTLMStream for authentication headers.
+        stream_wrapper_register('http', 'matejsvajger\NTLMSoap\Model\Stream\NTLMStream');
+
+        parent::__construct($wdsl, $options);
+
+        //- Restore http wrapper - further requests handled via cURL
+        if ($wrapperExists) {
+            stream_wrapper_restore('http');
+        }
     }
 
     /**
