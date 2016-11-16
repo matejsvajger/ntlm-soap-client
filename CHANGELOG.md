@@ -2,21 +2,11 @@
 
 All Notable changes to `ntlm-soap-client` will be documented in this file.
 
-Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
-
-## NEXT - YYYY-MM-DD
+## Version 1.1.0 - 2016-11-16
 
 ### Added
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
+- NTLMConfig - Client now accepts this class instead of an array.
+- NTLMStream - Implemented NTLM Authenticated http stream for initial connection.
 
 ### Security
-- Nothing
+- Throws a RequiredConfigMissingException if not all required items are present.

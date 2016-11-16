@@ -2,6 +2,8 @@
 
 namespace matejsvajger\NTLMSoap\Model\Traits;
 
+use matejsvajger\NTLMSoap\Common\NTLMConfig;
+
 trait NTLMRequest
 {
     /**
@@ -15,7 +17,8 @@ trait NTLMRequest
      */
     public function __doRequest($request, $location, $action, $version, $one_way = null)
     {
-        $userpwd = "{$this->domain}/{$this->username}:{$this->password}";
+        $auth = NTLMConfig::getAuthString();
+
         $headers = [
             'Method: POST',
             'Connection: Keep-Alive',
@@ -34,7 +37,7 @@ trait NTLMRequest
         curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
-        curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
+        curl_setopt($ch, CURLOPT_USERPWD, $auth);
 
         $response = curl_exec($ch);
 
