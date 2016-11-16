@@ -18,13 +18,13 @@ $ composer require matejsvajger/ntlm-soap-client
 
 ``` php
 $url = 'URL_TO_WEBSERVICE';
-$options = [
+$config = new matejsvajger/NTLMSoap/Common/NTLMConfig([
     'domain'   => 'domain',
     'username' => 'username',
     'password' => 'password'
-];
+]);
 
-$client = new matejsvajger/NTLMSoap/Client($url, $options);
+$client = new matejsvajger/NTLMSoap/Client($url, $config);
 
 $response = $client->ReadMultiple(['filter'=>[], 'setSize'=>1]);
 
@@ -32,6 +32,7 @@ foreach ($response->ReadMultiple_Result->CRMContactlist as $entity) {
     print_r($entity);
 }
 ```
+__NOTE:__ NTLM Authentication string looks like `<domain>/<username>:<password>`. _All three config items are required._
 
 ## Change log
 
