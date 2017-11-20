@@ -17,14 +17,14 @@ $ composer require matejsvajger/ntlm-soap-client
 ## Usage
 
 ``` php
-$url = 'URL_TO_WEBSERVICE';
-$config = new matejsvajger/NTLMSoap/Common/NTLMConfig([
+$url = 'URL_TO_WEBSERVICE_WSDL';
+$config = new matejsvajger\NTLMSoap\Common\NTLMConfig([
     'domain'   => 'domain',
     'username' => 'username',
     'password' => 'password'
 ]);
 
-$client = new matejsvajger/NTLMSoap/Client($url, $config);
+$client = new matejsvajger\NTLMSoap\Client($url, $config);
 
 $response = $client->ReadMultiple(['filter'=>[], 'setSize'=>1]);
 
