@@ -28,19 +28,20 @@ class BaseClient extends \SoapClient
         $this->wdsl = $wdsl;
         $this->config = $config;
 
-        $wrapperExists = in_array("http", stream_get_wrappers());
+        $scheme = parse_url($wdsl, PHP_URL_SCHEME); // we expect 'http' or 'https'
+        $wrapperExists = in_array($scheme, stream_get_wrappers());
         if ($wrapperExists) {
-            stream_wrapper_unregister('http');
+            stream_wrapper_unregister($scheme);
         }
 
         //- Replace HTTP Stream with NTLMStream for authentication headers.
-        stream_wrapper_register('http', 'matejsvajger\NTLMSoap\Model\Stream\NTLMStream');
+        stream_wrapper_register($scheme, 'matejsvajger\NTLMSoap\Model\Stream\NTLMStream');
 
         parent::__construct($wdsl, $options);
 
         //- Restore http wrapper - further requests handled via cURL
         if ($wrapperExists) {
-            stream_wrapper_restore('http');
+            stream_wrapper_restore($scheme);
         }
     }
 

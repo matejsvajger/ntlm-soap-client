@@ -61,6 +61,14 @@ class NTLMConfig implements \Serializable, \Iterator
         }
     }
 
+    public static function getCurlOptions()
+    {
+	if (isset($GLOBALS['NTLMClientCurlOptions'])) {
+	    return $GLOBALS['NTLMClientCurlOptions'];
+	}
+	return array();
+    }
+
     public function __set($param, $value)
     {
         $this->parameters[$param] = $value;

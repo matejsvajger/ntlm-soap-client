@@ -17,11 +17,18 @@ $ composer require matejsvajger/ntlm-soap-client
 ## Usage
 
 ``` php
-$url = 'URL_TO_WEBSERVICE_WSDL';
+$url = 'URL_TO_WEBSERVICE_WSDL';  // http and https are both supported
 $config = new matejsvajger\NTLMSoap\Common\NTLMConfig([
     'domain'   => 'domain',
     'username' => 'username',
-    'password' => 'password'
+    'password' => 'password',
+
+    // optionally pass curl options to be used
+    // for example, to disable SSL verification when using self-signed certs
+    'curlOptions' => array(
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false
+    )
 ]);
 
 $client = new matejsvajger\NTLMSoap\Client($url, $config);

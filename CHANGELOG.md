@@ -2,6 +2,13 @@
 
 All Notable changes to `ntlm-soap-client` will be documented in this file.
 
+## Unreleased 
+
+### Added
+- added support for HTTPS streams
+- added support for passing arbitrary CURL options
+
+
 ## Version 1.1.0 - 2016-11-16
 
 ### Added

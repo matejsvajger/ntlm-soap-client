@@ -38,7 +38,9 @@ trait NTLMRequest
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
         curl_setopt($ch, CURLOPT_USERPWD, $auth);
-
+        foreach (NTLMConfig::getCurlOptions() as $option => $value) {
+            curl_setopt($ch, $option, $value);
+        }
         $response = curl_exec($ch);
 
         return $response;
