@@ -19,7 +19,7 @@ $ composer require matejsvajger/ntlm-soap-client
 ``` php
 $url = 'URL_TO_WEBSERVICE_WSDL';
 $config = new matejsvajger\NTLMSoap\Common\NTLMConfig([
-    'domain'   => 'domain',
+    'domain'   => 'domain',    // Can be omitted
     'username' => 'username',
     'password' => 'password'
 ]);
@@ -32,7 +32,7 @@ foreach ($response->ReadMultiple_Result->CRMContactlist as $entity) {
     print_r($entity);
 }
 ```
-__NOTE:__ NTLM Authentication string looks like `<domain>/<username>:<password>`. _All three config items are required._
+__NOTE:__ NTLM Authentication string can look like `<domain>/<username>:<password>` or `<username>:<password>`. _`<username>` and `<password>` config items are required._
 
 ## Change log
 
