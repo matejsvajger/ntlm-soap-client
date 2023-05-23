@@ -9,7 +9,7 @@ class NTLMConfig implements \Serializable, \Iterator
     private $parameters = [];
 
     protected $requiredParameters = [
-        'domain', 'username', 'password'
+        'username', 'password'
     ];
 
     public function __construct(array $config)
@@ -24,7 +24,7 @@ class NTLMConfig implements \Serializable, \Iterator
     }
 
     /**
-     * Returns a "<domain>/<username>:<password>" formated
+     * Returns a "<domain>/<username>:<password>" or "<username>:<password>" formatted
      * string, required for NTLM Authentication headers.
      *
      * @author Matej Svajger <matej.svajger@koerbler.com>
@@ -35,11 +35,11 @@ class NTLMConfig implements \Serializable, \Iterator
      */
     public static function getAuthString()
     {
-        $domain   = $GLOBALS['NTLMClientDomain'];
+        $domain   = isset($GLOBALS['NTLMClientDomain']) && !empty($GLOBALS['NTLMClientDomain']) ? $GLOBALS['NTLMClientDomain'] : '';
         $username = $GLOBALS['NTLMClientUsername'];
         $password = $GLOBALS['NTLMClientPassword'];
 
-        return "{$domain}/{$username}:{$password}";
+        return sprintf('%s%s:%s', $domain ? $domain.'/' : '', $username, $password);
     }
 
     /**
@@ -59,6 +59,11 @@ class NTLMConfig implements \Serializable, \Iterator
                 throw RequiredConfigMissingException::withItem($parameter);
             }
         }
+    }
+
+    public function __isset($param)
+    {
+        return isset($this->parameters[$param]);
     }
 
     public function __set($param, $value)
